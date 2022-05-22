@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
         int stage = sp.getInt("stage", 4);
         Log.v("brad", username + isSound + stage);
     }
+
+    //寫入資料 ->關掉app還會留存紀錄
     public void test2(View view) {
+        editor.putString("username", "test1");
+        editor.putBoolean("isSound", false);
+        editor.putInt("stage", 7);
+        editor.commit(); // 真正寫入資料
+        Toast.makeText(this, "save Ok", Toast.LENGTH_SHORT).show();
     }
 }
