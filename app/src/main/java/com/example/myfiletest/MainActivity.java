@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
     //資料寫出
     public void test3(View view) {
         try {
-          FileOutputStream fout = openFileOutput("test1.text", MODE_PRIVATE);
-          fout.write("read ry".getBytes());
+          //FileOutputStream fout = openFileOutput("test1.text", MODE_PRIVATE);
+          //文字會加在檔案後面
+            FileOutputStream fout = openFileOutput("test1.text", MODE_APPEND);
+          fout.write("read ryrtr".getBytes());
           fout.flush(); //資料抽出
           fout.close();
           Toast.makeText(this, "save Ok", Toast.LENGTH_SHORT).show();
@@ -56,7 +61,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //資料輸入
     public void test4(View view) {
+        try {
+            FileInputStream fin = openFileInput("test1.text");
+            BufferedReader br = new BufferedReader( new InputStreamReader(fin));
+            String line;
+            while ((line = br.readLine()) != null){
+                Log.v("brad", line);
+            }
+            fin.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
