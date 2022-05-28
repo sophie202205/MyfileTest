@@ -77,4 +77,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*test1和test2,test3,test4是跟著專案共存亡，清除app資料就清除所以存入資料，刪除app就無法再復原了*/
 }
