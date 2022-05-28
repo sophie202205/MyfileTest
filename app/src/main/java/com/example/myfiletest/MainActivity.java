@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sp; //存取檔案使用(偏好設定)
@@ -21,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences("game", MODE_PRIVATE);
         editor = sp.edit();
     }
-    //取得資料
+    //取得資料-偏好設定
     public void test1(View view) {
         //第二個值是預設值
         String username = sp.getString("username", "brad");
@@ -38,4 +42,21 @@ public class MainActivity extends AppCompatActivity {
         editor.commit(); // 真正寫入資料
         Toast.makeText(this, "save Ok", Toast.LENGTH_SHORT).show();
     }
+
+    //資料寫出
+    public void test3(View view) {
+        try {
+          FileOutputStream fout = openFileOutput("test1.text", MODE_PRIVATE);
+          fout.write("read ry".getBytes());
+          fout.flush(); //資料抽出
+          fout.close();
+          Toast.makeText(this, "save Ok", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void test4(View view) {
+    }
+
 }
