@@ -9,11 +9,13 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sp; //存取檔案使用(偏好設定)
     private SharedPreferences.Editor editor; //內部類別
+    private File sdroot, approot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         sp = getSharedPreferences("game", MODE_PRIVATE);
         editor = sp.edit();
+
+        sdroot = Environment.getExternalStorageDirectory();
+        Log.v("brad", sdroot.getAbsolutePath()); //取得絕對路徑
+        approot = new File(sdroot, "Android/data/" + getPackageName() + "/");
+        if(!approot.exists()){
+            if(approot.mkdir()){
+                Log.v("brad", "mkdir ok"); //新增成功
+            }else {
+                Log.v("brad", "mkdir xx"); //新增失敗
+            }
+        }
     }
     //取得資料-偏好設定
     public void test1(View view) {
@@ -104,6 +118,15 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void test5(View view) {
+    }
+    public void test6(View view) {
+    }
+    public void test7(View view) {
+    }
+    public void test8(View view) {
     }
 
     /*test1和test2,test3,test4是跟著專案共存亡，清除app資料就清除所以存入資料，刪除app就無法再復原了*/

@@ -31,6 +31,30 @@
         android:text="test4"
         android:onClick="test4">
     </Button>
+    <Button
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:text="test5"
+        android:onClick="test5">
+    </Button>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test6"
+        android:onClick="test6">
+    </Button>
+    <Button
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:text="test7"
+        android:onClick="test7">
+    </Button>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test8"
+        android:onClick="test8">
+    </Button>
 
 
 </LinearLayout>
