@@ -55,6 +55,9 @@
         android:text="test8"
         android:onClick="test8">
     </Button>
-
-
+    <TextView
+        android:id="@+id/mesg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </TextView>
 </LinearLayout>

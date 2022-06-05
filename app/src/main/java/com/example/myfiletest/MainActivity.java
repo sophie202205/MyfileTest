@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp; //存取檔案使用(偏好設定)
     private SharedPreferences.Editor editor; //內部類別
     private File sdroot, approot;
+    private TextView mesg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
+        mesg = findViewById(R.id.mesg);
+
         sp = getSharedPreferences("game", MODE_PRIVATE);
         editor = sp.edit();
 
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "save Ok", Toast.LENGTH_SHORT).show();
     }
 
-    //資料寫出
+    //資料寫出->存在內存空間，空間較小
     public void test3(View view) {
         try {
           //FileOutputStream fout = openFileOutput("test1.text", MODE_PRIVATE);
@@ -117,16 +121,62 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
+    //存在sd卡，不隨著應用程式共存亡->sd卡，空間較大
     public void test5(View view) {
+        File file1 = new File(sdroot, "test5.txt");
+        try {
+            FileOutputStream fout = new FileOutputStream(file1);
+            fout.write("ok1".getBytes());
+            fout.flush();
+            fout.close();
+            Toast.makeText(this, "save5 Ok", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Log.v("brad", "TEST5 : " + e.toString());
+        }
     }
+    //存在sd卡，隨著應用程式共存亡
     public void test6(View view) {
+        File file1 = new File(approot, "test5.txt");
+        try {
+            FileOutputStream fout = new FileOutputStream(file1);
+            fout.write("ok1".getBytes());
+            fout.flush();
+            fout.close();
+            Toast.makeText(this, "save6 Ok", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Log.v("brad", "TEST6 : " + e.toString());
+        }
     }
     public void test7(View view) {
+        File file1 = new File(sdroot, "test5.txt");
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file1)));
+            String line;
+            StringBuffer sb = new StringBuffer();
+            while((line = br.readLine()) != null){
+                sb.append(line + "\n");
+            }
+            br.close();
+            mesg.setText(sb);
+        }catch (Exception e){
+            mesg.setText("error");
+        }
     }
     public void test8(View view) {
+        File file1 = new File(approot, "test5.txt");
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file1)));
+            String line;
+            StringBuffer sb = new StringBuffer();
+            while((line = br.readLine()) != null){
+                sb.append(line + "\n");
+            }
+            br.close();
+            mesg.setText(sb);
+        }catch (Exception e){
+            mesg.setText("");
+        }
     }
 
     /*test1和test2,test3,test4是跟著專案共存亡，清除app資料就清除所以存入資料，刪除app就無法再復原了*/
